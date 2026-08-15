@@ -104,8 +104,14 @@ function ensureNodeRuntime() {
   mkdirSync(cache, { recursive: true })
   const base = `https://nodejs.org/dist/v${nodeVersion}`
   const sumsPath = join(cache, `SHASUMS256-v${nodeVersion}.txt`)
-  if (!existsSync(nodeArchive)) download(`${base}/${nodeArchiveName}`, nodeArchive)
-  if (!existsSync(sumsPath)) download(`${base}/SHASUMS256.txt`, sumsPath)
+  if (!existsSync(nodeArchive)) {
+    console.log(`[stage] ensureNodeRuntime: downloading Node ${nodeVersion} archive`)
+    download(`${base}/${nodeArchiveName}`, nodeArchive)
+  }
+  if (!existsSync(sumsPath)) {
+    console.log(`[stage] ensureNodeRuntime: downloading Node SHASUMS256.txt`)
+    download(`${base}/SHASUMS256.txt`, sumsPath)
+  }
   const expectedLine = readFileSync(sumsPath, 'utf8').split('\n')
     .find(line => line.endsWith(`  ${nodeArchiveName}`))
   if (expectedLine === undefined) throw new Error(`Node checksum entry missing for ${nodeArchiveName}`)
@@ -378,11 +384,17 @@ function stageSourceCounterpart(link) {
   return stageVendorTarget(source)
 }
 
+let stagedWalkCount = 0
+const STAGED_WALK_LOG_EVERY = 5000
+
 function walk(rootPath, visit) {
   for (const entry of readdirSync(rootPath, { withFileTypes: true })) {
     const path = join(rootPath, entry.name)
     if (entry.isSymbolicLink()) visit(path)
     else if (entry.isDirectory()) walk(path, visit)
+    if (++stagedWalkCount % STAGED_WALK_LOG_EVERY === 0) {
+      console.log(`[stage] walk ${stagedWalkCount} entries, now at ${path}`)
+    }
   }
 }
 
@@ -720,6 +732,7 @@ function installDesktopPackages() {
   ]
   const installedVersions = {}
   for (const spec of packages) {
+    console.log(`[stage] installDesktopPackages: ${spec.manifest}`)
     const manifest = JSON.parse(readFileSync(spec.manifest, 'utf8'))
     delete manifest.build
     delete manifest.devDependencies
@@ -864,15 +877,21 @@ run(process.execPath, [
 replaceDeprecatedDomExceptionShim()
 assertDeprecatedLockBranchesAreNotShipped()
 console.log('Relinking workspace packages')
+console.log('[stage] rewriteWorkspaceLinks: walking runtime symlinks')
 rewriteWorkspaceLinks()
+console.log(`[stage] rewriteWorkspaceLinks done (walked ${stagedWalkCount} entries)`)
 relinkInstallationWorkspacePackages()
+console.log(`[stage] relinkInstallationWorkspacePackages done (walked ${stagedWalkCount} entries)`)
 console.log('Installing desktop packages')
 installDesktopPackages()
+console.log('[stage] installDesktopPackages done')
 copyFileSync(join(dshSource, 'THIRD_PARTY_NOTICES.md'), join(runtime, 'THIRD_PARTY_NOTICES.md'))
 restoreExecutableHelpers()
 console.log('Normalizing runtime links')
 normalizeRuntimeLinks()
+console.log(`[stage] normalizeRuntimeLinks done (walked ${stagedWalkCount} entries)`)
 assertSelfContained(runtime, 'DSH runtime')
+console.log('[stage] ensureNodeRuntime: staging Node runtime')
 ensureNodeRuntime()
 assertSelfContained(nodeRuntime, 'Node runtime')
 ensureLinuxPtyBuild()
