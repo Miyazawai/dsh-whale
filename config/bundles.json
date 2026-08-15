@@ -39,9 +39,16 @@
     { "id": "dsh-browser", "pkg": "Lum1104/dsh-browser", "source": "github", "note": "Chrome 扩展，独立安装，非 DSH 插件" }
   ],
   "presets": [
-    { "id": "anchored-standard", "source": "upstream/dsh-anchored-standard/preset", "version": "vendored", "note": "用户指定必装；测试基线 rc.5 47f9438 与本项目一致" },
-    { "id": "zero-anchored-standard", "source": "upstream/dsh-anchored-standard/zero-anchored-standard", "version": "vendored" },
-    { "id": "whoami-standard", "source": "upstream/dsh-anchored-standard/whoami-standard", "version": "vendored" },
-    { "id": "router-standard", "source": "upstream/dsh-routing-suite/preset/preset", "version": "0.1.1", "note": "用户指定必装；思维模式路由预设（spec/react/weak），致谢 anchored-standard" }
-  ]
+    { "id": "anchored-standard", "source": "upstream/dsh-anchored-standard/preset", "version": "vendored", "note": "用户指定必装；测试基线 rc.5 47f9438 与本项目一致；绑定 pro 模型族", "model": "pro" },
+    { "id": "zero-anchored-standard", "source": "upstream/dsh-anchored-standard/zero-anchored-standard", "version": "vendored", "model": "pro" },
+    { "id": "whoami-standard", "source": "upstream/dsh-anchored-standard/whoami-standard", "version": "vendored", "model": "pro" },
+    { "id": "router-standard", "source": "upstream/dsh-routing-suite/preset/preset", "version": "0.1.1", "note": "用户指定必装；思维模式路由预设；绑定 flash 模型族", "model": "flash" }
+  ],
+  "modelPresetLink": {
+    "plugin": "@dsh-whale/model-preset-link",
+    "families": { "flash": ["router-standard"], "pro": ["anchored-standard", "zero-anchored-standard", "whoami-standard"] },
+    "pluginStack": { "flash": ["dsh-super-injector"], "pro": [] },
+    "modelPatterns": { "flash": "/flash/i", "pro": "/pro/i" },
+    "note": "自研插件（T6）：client 监听 ctx.modelDirectories 按会话模型切预设（blank 自动选，已开跑会话提示）；host 写 agent-presets 默认；注入器随模型族启停"
+  }
 }

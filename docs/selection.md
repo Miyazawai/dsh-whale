@@ -39,8 +39,13 @@ dsh-spend · dsh-visualize · dsh-drag-and-drop（跟踪 omdsh-dev 仓）· dsh-
 
 ## 🔀 融合与必装预设（自研层）
 
-- **anchored-standard（用户指定必装，随包 vendor）**：`upstream/dsh-anchored-standard/`，三个变体（Anchored Standard / Zero-Anchored / Whoami），安装 = 拷贝进 `$DSH_HOME/.agent-presets/<id>`；**其测试基线（DSH rc.5 commit 47f9438 + Node 24 Windows）与我们的锁定基线完全一致**，零兼容风险。
-- **router-standard（用户指定必装，随包 vendor）**：`upstream/dsh-routing-suite/preset/preset`（dsh-router-standard v0.1.1，思维模式路由预设 spec/react/weak，致谢 anchored-standard），安装 = 拷贝进 `$DSH_HOME/.agent-presets/router-standard`。
+- **anchored-standard（用户指定必装，随包 vendor）**：`upstream/dsh-anchored-standard/`，三个变体（Anchored Standard / Zero-Anchored / Whoami），安装 = 拷贝进 `$DSH_HOME/.agent-presets/<id>`；**其测试基线（DSH rc.5 commit 47f9438 + Node 24 Windows）与我们的锁定基线完全一致**，零兼容风险。**绑定 pro 模型**。
+- **router-standard（用户指定必装，随包 vendor）**：`upstream/dsh-routing-suite/preset/preset`（dsh-router-standard v0.1.1，思维模式路由预设 spec/react/weak，致谢 anchored-standard），安装 = 拷贝进 `$DSH_HOME/.agent-presets/router-standard`。**绑定 flash 模型**（连同注入器 dsh-super-injector 一起，属 routing-suite 栈）。
+- **模型↔预设联动（用户指定，自动切换）**：模型切到 flash → 启用 routing-suite 栈（router-standard 预设 + 注入器）、停用 anchored；切到 pro → 启用 anchored-standard、停用 routing-suite 栈。实现为自研插件 `@dsh-whale/model-preset-link`（T6 范畴）：
+  - client 半区监听 `ctx.modelDirectories` 的按会话模型选择，按模型 id 模式（flash/pro 可配置正则）判定族；
+  - **blank 会话**：自动调 `agentPresets.select({ sessionId, agentPreset })` 切换预设（DSH 原生支持，`agent-preset/selected` 事件确认）；
+  - **已开跑的会话**：DSH 原生锁定预设（seat-store 仅 blank 可改）——只能提示用户新建会话或手动改；
+  - host 半区：把当前模型对应的预设写入 agent-presets 默认（`defaultId`），新会话默认正确；注入器的启停随模型族切换。
 - **自研预设（T6）**：在 anchored-standard / router-standard 之上继续吸收"梁神"preset 思路，产出 dsh-whale 自己的默认预设。
 - **补丁簿（构建阶段逐个打补丁）**：
   1. dsh-notify-windows 的手动 cordis.patch.yml 步骤 → 自动化
