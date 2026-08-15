@@ -1,9 +1,9 @@
 # 选品清单（终版）
 
-> 依据：四簇调研（50 仓）+ 设计树决策（Q1~Q13）。许可政策：宽松（侵删兜底），表中不再标注许可。
+> 依据：四簇调研（50 仓）+ 设计树决策（Q1~Q17）+ 用户追加必装（anchored-standard、dsh-routing-suite）。许可政策：宽松（侵删兜底），表中不再标注许可。
 > 规则：核心包"一功能一实现"；可选包默认关、一键开。来源均为 GitHub 社区 bundle 插件，全部"零核心改动"。
 
-## ✅ 核心包（默认启用，16 个）
+## ✅ 核心包（默认启用，17 个）
 
 | # | 功能 | 插件 | 备注 |
 |---|---|---|---|
@@ -23,6 +23,7 @@
 | 14 | 视觉工具 | dsh-vision-toolkit | 用户指定：装、打开；配置指引推荐智谱免费多模态（glm-4v-flash，OpenAI 兼容端点），见 build 阶段文档 |
 | 15 | 插件说明 | dsh-plugin-description | 用户指定：装、打开 |
 | 16 | 桌宠 | dsh-dafeiyu | 用户指定：装、打开（alpha，Windows）；构建期冒烟测试：透明置顶窗口与 Electron 桌面壳共存 |
+| 17 | 运行时注入 | dsh-super-injector | 用户指定：必装（BepInEx 式运行时注入，dev_* 工具全家桶；来自 dsh-routing-suite，lib/ 以 DSH_CHECKOUT 构建） |
 
 ## 🟡 可选包（默认关，17 个）
 
@@ -39,7 +40,8 @@ dsh-spend · dsh-visualize · dsh-drag-and-drop（跟踪 omdsh-dev 仓）· dsh-
 ## 🔀 融合与必装预设（自研层）
 
 - **anchored-standard（用户指定必装，随包 vendor）**：`upstream/dsh-anchored-standard/`，三个变体（Anchored Standard / Zero-Anchored / Whoami），安装 = 拷贝进 `$DSH_HOME/.agent-presets/<id>`；**其测试基线（DSH rc.5 commit 47f9438 + Node 24 Windows）与我们的锁定基线完全一致**，零兼容风险。
-- **自研预设（T6）**：在 anchored-standard 之上继续吸收"梁神"preset 思路，产出 dsh-whale 自己的默认预设。
+- **router-standard（用户指定必装，随包 vendor）**：`upstream/dsh-routing-suite/preset/preset`（dsh-router-standard v0.1.1，思维模式路由预设 spec/react/weak，致谢 anchored-standard），安装 = 拷贝进 `$DSH_HOME/.agent-presets/router-standard`。
+- **自研预设（T6）**：在 anchored-standard / router-standard 之上继续吸收"梁神"preset 思路，产出 dsh-whale 自己的默认预设。
 - **补丁簿（构建阶段逐个打补丁）**：
   1. dsh-notify-windows 的手动 cordis.patch.yml 步骤 → 自动化
   2. theme-gallery × @oh-dsh/skins 共存验证

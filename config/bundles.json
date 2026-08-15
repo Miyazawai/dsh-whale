@@ -16,7 +16,8 @@
     { "id": "dsh-skill-viewer", "pkg": "dsh-skill-viewer", "source": "npm", "version": "0.4.0", "profile": ["web"], "function": "Skill 管理" },
     { "id": "dsh-vision-toolkit", "pkg": "@anionex/dsh-vision-toolkit", "source": "npm", "version": "0.1.7", "profile": ["web"], "function": "视觉工具", "note": "配置指引 docs/guides/vision-toolkit-zhipu.md" },
     { "id": "dsh-plugin-description", "pkg": "dsh-plugin-description", "source": "npm", "version": "1.2.1", "profile": ["web"], "function": "插件说明" },
-    { "id": "dsh-dafeiyu", "pkg": "dsh-dafeiyu", "source": "npm", "version": "0.1.0-alpha.6", "profile": ["web"], "function": "桌宠", "note": "alpha；补丁簿⑤桌面壳共存" }
+    { "id": "dsh-dafeiyu", "pkg": "dsh-dafeiyu", "source": "npm", "version": "0.1.0-alpha.6", "profile": ["web"], "function": "桌宠", "note": "alpha；补丁簿⑤桌面壳共存" },
+    { "id": "dsh-super-injector", "pkg": "upstream/dsh-routing-suite/injector", "source": "link", "version": "0.3.3", "profile": ["web"], "function": "运行时注入（BepInEx 式）", "note": "用户指定必装；lib/ 需以 DSH_CHECKOUT 构建；设计契约基于 rc.6 语义，peer 范围宽松" }
   ],
   "optional": [
     { "id": "dsh-spend", "pkg": "dsh-spend", "source": "npm", "function": "多维仪表盘" },
@@ -40,6 +41,7 @@
   "presets": [
     { "id": "anchored-standard", "source": "upstream/dsh-anchored-standard/preset", "version": "vendored", "note": "用户指定必装；测试基线 rc.5 47f9438 与本项目一致" },
     { "id": "zero-anchored-standard", "source": "upstream/dsh-anchored-standard/zero-anchored-standard", "version": "vendored" },
-    { "id": "whoami-standard", "source": "upstream/dsh-anchored-standard/whoami-standard", "version": "vendored" }
+    { "id": "whoami-standard", "source": "upstream/dsh-anchored-standard/whoami-standard", "version": "vendored" },
+    { "id": "router-standard", "source": "upstream/dsh-routing-suite/preset/preset", "version": "0.1.1", "note": "用户指定必装；思维模式路由预设（spec/react/weak），致谢 anchored-standard" }
   ]
 }
