@@ -4,175 +4,114 @@
 </p>
 
 <div align="center">
-  <img src="./assets/dsh-whale.png" width="128" alt="Oh-DSH whale">
-  <h1>Oh-DSH</h1>
-  <p><strong>一套 DSH runtime，Desktop、Web 与 TUI 三种开发体验。</strong></p>
-  <p>把 AI Agent、Workspace、本地工具与插件生态带到你习惯的界面。</p>
+  <h1>🐳 dsh-whale（鲸鱼包）</h1>
+  <p><strong>DSH 傻瓜整合包 —— 开箱即用的 DeepSeek Harness 发行版外壳。</strong></p>
+  <p>核心 17 组件开箱即用，三种界面（webui / gui / tui）一个安装包切换，Windows 小白双击即用。</p>
 </div>
 
 <p align="center">
-  <a href="https://github.com/hust-open-atom-club/oh-dsh/releases/latest"><img alt="GitHub release" src="https://img.shields.io/github/v/release/hust-open-atom-club/oh-dsh?display_name=tag&amp;sort=semver&amp;style=flat-square&amp;color=2f81f7"></a>
-  <a href="https://github.com/hust-open-atom-club/oh-dsh/stargazers"><img alt="GitHub stars" src="https://img.shields.io/github/stars/hust-open-atom-club/oh-dsh?style=flat-square&amp;color=f5a623"></a>
-  <img alt="Desktop, Web and TUI" src="https://img.shields.io/badge/Desktop%20%7C%20Web%20%7C%20TUI-3b82f6?style=flat-square">
-  <img alt="macOS, Linux and Windows" src="https://img.shields.io/badge/macOS%20%7C%20Linux%20%7C%20Windows-111827?style=flat-square">
-  <a href="./LICENSE"><img alt="MIT License" src="https://img.shields.io/badge/license-MIT-34a853?style=flat-square"></a>
+  <img alt="Desktop | Web | TUI" src="https://img.shields.io/badge/Desktop%20%7C%20Web%20%7C%20TUI-3b82f6?style=flat-square">
+  <img alt="Windows first" src="https://img.shields.io/badge/Windows%20First-111827?style=flat-square">
+  <img alt="Everything is a plugin" src="https://img.shields.io/badge/一切皆插件-34a853?style=flat-square">
 </p>
 
 <p align="center">
-  <a href="https://github.com/hust-open-atom-club/oh-dsh/releases/latest"><strong>下载最新版</strong></a>
+  <a href="https://github.com/Miyazawai/dsh-whale/releases/latest"><strong>下载最新版</strong></a>
   ·
-  <a href="./docs/usage.md">使用文档</a>
+  <a href="./docs/selection.md">选品清单</a>
   ·
-  <a href="./docs/design.md">设计文档</a>
+  <a href="./docs/adr/0001-distribution-shell-on-oh-dsh.md">架构决策</a>
 </p>
 
-<p align="center">
-  <img src="./assets/oh-dsh-desktop-showcase.png" alt="Oh-DSH Desktop 界面展示" width="100%">
-</p>
+---
 
-Oh-DSH 将 DeepSeek Harness、Node.js、本地开发工具和内置插件打包为可安装的
-Desktop、Web 与 TUI 发行版。模型服务仍可按需运行在云端；Workspace、终端、
-Git Review、浏览器、文件、会话与插件状态由本地工作台统一组织。
+以 [Oh-DSH](https://github.com/hust-open-atom-club/oh-dsh) 发行层为**基座**（一次性源码级 fork，独立演进）。把社区插件**精选、去重、兼容性修复**后打包成一个发行版，**"核心包"只是默认组合**——遵循 DSH"一切皆插件"哲学，**所有组件都可随时插入与拆除**。
 
-## 主要能力
+## ✨ 特色
 
-<table>
-  <tr>
-    <td width="50%" valign="top">
-      <h3>🖥️ 三种交互界面</h3>
-      <p>使用同一个 <code>ohdsh</code> 命令启动 Desktop、Web 或 TUI。三端共享会话、凭据、皮肤与插件缓存，同时保留独立 Profile。</p>
-    </td>
-    <td width="50%" valign="top">
-      <h3>🧰 本地开发工作台</h3>
-      <p>内置 Workspace、PTY 终端、浏览器、文件浏览、Side chat 与 Trajectory；面板可以折叠、固定、分屏或全屏展开。</p>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" valign="top">
-      <h3>🔍 Git Review</h3>
-      <p>查看工作区改动与 commit diff，在代码行上添加 review comment，并在同一个侧边栏完成分支、提交和推送操作。</p>
-    </td>
-    <td width="50%" valign="top">
-      <h3>🧩 插件市场</h3>
-      <p>浏览、分类、安装、启用、更新和卸载插件。所有变更先进入隔离预览，可在应用前检查风险，也可以撤销并回到上一状态。</p>
-    </td>
-  </tr>
-  <tr>
-    <td width="50%" valign="top">
-      <h3>🎨 跨端皮肤</h3>
-      <p><code>@oh-dsh/skins</code> 为 Desktop、Web 与 TUI 提供统一主题，并针对各界面的布局和可读性分别适配。</p>
-    </td>
-    <td width="50%" valign="top">
-      <h3>📦 可拆分发行</h3>
-      <p>按需安装完整版、Web-only 或 TUI-only。每种发行都自带固定版本的 DSH 与 Node runtime，不要求单独安装运行环境。</p>
-    </td>
-  </tr>
-</table>
+- **三界面一包**：webui（浏览器）/ gui（Electron 桌面壳）/ tui（终端，dsh-TUI），共享同一份会话与配置，启动时自选
+- **核心 17 组件开箱即用**：每功能一实现（功能唯一性 > 资源开销 > 包体积）
+- **模型↔预设联动**：换 flash 模型自动启用思维路由（Router Standard），换 pro 自动启用锚定式预设（Anchored Standard）——设置页一键开关，想关就关
+- **可插拔**：任何插件可用官方 `dsh plugin` 机制移除；可选 17 组件默认关闭、一键开启
+- **自带运行时**：无需安装 Node/pnpm，自带固定版本 DSH runtime
 
-## 下载与安装
+## 🚀 快速开始
 
-从 [GitHub Releases](https://github.com/hust-open-atom-club/oh-dsh/releases/latest)
-选择需要的发行形态：
+> 安装包构建完成后更新此节。当前为开发版：
 
-| 发行形态 | 包含内容 | 适合场景 |
-| --- | --- | --- |
-| 完整版 | **Oh-DSH Desktop**、Web、TUI、Node runtime 和内置插件 | 本地开发工作台 |
-| Web-only | **Oh-DSH Web**、Node runtime 和内置 Web 插件，不含 Electron | 浏览器、服务器或轻量安装 |
-| TUI-only | **Oh-DSH TUI**、Node runtime 和终端插件，不含 Electron | SSH 与纯终端环境 |
-
-- **macOS：**打开 DMG，将 **Oh-DSH Desktop** 拖入 Applications。
-- **Windows：**运行安装包，或解压便携版后启动。
-- **Linux：**直接运行 AppImage，或使用 `apt` 安装 deb。
-
-Web-only 与 TUI-only 包解压后即可运行：
-
-```sh
-# Web UI，默认监听 http://127.0.0.1:3080
-./bin/ohdsh web
-
-# Terminal UI
-./bin/ohdsh tui
+```powershell
+# Web 界面
+.\bin\ohdsh web
+# 终端界面
+.\bin\ohdsh tui
+# GUI：从桌面快捷方式启动（或 pnpm start）
 ```
 
-Windows 使用 `bin\ohdsh.cmd web` 或 `bin\ohdsh.cmd tui`。
+## 📦 核心组件（默认启用，17 个）
 
-### 安装统一命令
+| 功能 | 插件 | 来源 |
+|---|---|---|
+| 费用/计费 | dsh-cost-meter | [Han-1413141/dsh-cost-meter](https://github.com/Han-1413141/dsh-cost-meter) |
+| 生成式 UI | dsh-genui | [omdsh-dev/dsh-genui](https://github.com/omdsh-dev/dsh-genui) |
+| 文件引用 | dsh-at-file | [omdsh-dev/dsh-at-file](https://github.com/omdsh-dev/dsh-at-file) |
+| 文件上传 | dsh-file-uploads | [l541402398/dsh-file-uploads](https://github.com/l541402398/dsh-file-uploads) |
+| 会话折叠 | dsh-web-archive | [renat3u/dsh-web-archive](https://github.com/renat3u/dsh-web-archive) |
+| 导航条 | dsh-navbar | [vlln/dsh-navbar](https://github.com/vlln/dsh-navbar) |
+| 路径可点 | dsh-file-mentions | [a903067276-rgb/dsh-file-mentions](https://github.com/a903067276-rgb/dsh-file-mentions) |
+| 消息编辑 | dsh-message-edit | [Moeblack/dsh-message-edit](https://github.com/Moeblack/dsh-message-edit) |
+| 文档读取 | dsh-plugin-anydoc | [beancookie/dsh-plugin-anydoc](https://github.com/beancookie/dsh-plugin-anydoc) |
+| Web 通知 | dsh-session-notification | [dingyi222666/dsh-session-notification](https://github.com/dingyi222666/dsh-session-notification) |
+| 主题 | dsh-theme-gallery | [wsxwj123/dsh-plugins](https://github.com/wsxwj123/dsh-plugins)（theme-gallery 子包） |
+| CSV 工具 | dsh-tool-csv | [omdsh-dev/dsh-tool-csv](https://github.com/omdsh-dev/dsh-tool-csv) |
+| Skill 管理 | dsh-skill-viewer | [Fishquito7/dsh-skill-viewer](https://github.com/Fishquito7/dsh-skill-viewer) |
+| 视觉工具 | dsh-vision-toolkit | [Anionex/dsh-vision-toolkit](https://github.com/Anionex/dsh-vision-toolkit) |
+| 插件说明 | dsh-plugin-description | [MysaDC/dsh-plugin-description](https://github.com/MysaDC/dsh-plugin-description) |
+| 桌宠 | dsh-dafeiyu | [QCYTSN/dsh-dafeiyu](https://github.com/QCYTSN/dsh-dafeiyu) |
+| 运行时注入 | dsh-super-injector | [yjh051108/dsh-routing-suite](https://github.com/yjh051108/dsh-routing-suite)（dsh-super-injector） |
 
-macOS 完整版可将应用内的启动器加入 `PATH`：
+## 🎛️ 预设（随包安装，模型联动）
 
-```sh
-sudo ln -sf \
-  "/Applications/Oh-DSH Desktop.app/Contents/Resources/bin/ohdsh" \
-  /usr/local/bin/ohdsh
-```
+| 预设 | 绑定模型 | 来源 |
+|---|---|---|
+| Anchored Standard（含 Zero-Anchored / Whoami 变体） | pro | [xiaobright/dsh-anchored-standard](https://github.com/xiaobright/dsh-anchored-standard) |
+| Router Standard | flash | [yjh051108/dsh-routing-suite](https://github.com/yjh051108/dsh-routing-suite)（dsh-router-standard） |
 
-Web-only 与 TUI-only 包可直接运行 `./bin/ohdsh`，也可以把它加入 `PATH`。
+## 🧩 可选组件（默认关闭，一键开启）
 
-## 使用
+| 功能 | 插件 | 来源 |
+|---|---|---|
+| 多维仪表盘 | dsh-spend | [nonewind/dsh-spend](https://github.com/nonewind/dsh-spend) |
+| 自由 HTML 卡片 | dsh-visualize | [Nagi-ovo/dsh-visualize](https://github.com/Nagi-ovo/dsh-visualize) |
+| 拖拽真实路径 | dsh-drag-and-drop | [omdsh-dev/dsh-drag-and-drop](https://github.com/omdsh-dev/dsh-drag-and-drop) |
+| 摘要 tab | dsh-focus-chat | [dingyi222666/dsh-focus-chat](https://github.com/dingyi222666/dsh-focus-chat) |
+| 文档写/MCP | dsh-cowork | [Jesse-njx/dsh-cowork](https://github.com/Jesse-njx/dsh-cowork) |
+| 工作区回滚 | dsh-turn-rewind | [Anionex/dsh-turn-rewind](https://github.com/Anionex/dsh-turn-rewind) |
+| Windows 通知 | dsh-notify-windows | [SeverusZh/dsh-notify-windows](https://github.com/SeverusZh/dsh-notify-windows) |
+| 多引擎搜索 | modsearch | [liustack/modsearch](https://github.com/liustack/modsearch) |
+| 便签 | dsh-sticky-note | [Meredith2328/dsh-sticky-note](https://github.com/Meredith2328/dsh-sticky-note) |
+| 注意力徽章 | dsh-web-attention-badge | [Luaphes/dsh-web-attention-badge](https://github.com/Luaphes/dsh-web-attention-badge) |
+| HUD 状态面板 | dsh-hud | [a903067276-rgb/dsh-hud](https://github.com/a903067276-rgb/dsh-hud) |
+| 状态文案 | ui-status-label | [alingalingling/ui-status-label](https://github.com/alingalingling/ui-status-label) |
+| 技能导入 | dsh-skillport | [Jesse-njx/dsh-skillport](https://github.com/Jesse-njx/dsh-skillport) |
+| 内置开关 | dsh-builtin-toggles | [Starfie1d1272/dsh-builtin-toggles](https://github.com/Starfie1d1272/dsh-builtin-toggles) |
+| 批注 | dsh-annotation | [omdsh-dev/dsh-annotation](https://github.com/omdsh-dev/dsh-annotation) |
+| 跨会话消息 | dsh-crosstalk | [Jesse-njx/dsh-crosstalk](https://github.com/Jesse-njx/dsh-crosstalk) |
+| 浏览器操控 | dsh-browser（Chrome 扩展，独立安装） | [Lum1104/dsh-browser](https://github.com/Lum1104/dsh-browser) |
 
-```sh
-ohdsh desktop          # 启动 Oh-DSH Desktop
-ohdsh web              # 启动 Oh-DSH Web
-ohdsh web --port 3080  # 指定 Web 端口
-ohdsh tui              # 启动 Oh-DSH TUI
-```
+## 🙏 致谢
 
-三端默认共同使用 `~/.ohdsh` 存放缓存、配置、会话、凭据与插件状态。
-设置 `OH_DSH_HOME` 可以统一更换数据目录；运行 `ohdsh web --help` 或
-`ohdsh tui --help` 可以查看界面专属选项。
+本项目是**社区生态的组合产物**，站在以下项目的肩膀上（均为开源）：
 
-<details>
-<summary><strong>从源码运行</strong></summary>
+- **[hust-open-atom-club/oh-dsh](https://github.com/hust-open-atom-club/oh-dsh)** —— 发行层基座（三形态统一、Pinned runtime、分层分发）
+- **[ccch1mneyyy/dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI)** —— 终端界面（TUI）
+- **[omdsh-dev/DSH-better-sidebar](https://github.com/omdsh-dev/DSH-better-sidebar)** —— 侧边栏工作台（PTY/文件/Git）
+- **[xiaobright/dsh-anchored-standard](https://github.com/xiaobright/dsh-anchored-standard)** —— 锚定式预设（pro 模型绑定）
+- **[yjh051108/dsh-routing-suite](https://github.com/yjh051108/dsh-routing-suite)** —— 思维路由预设 + 超级注入器（flash 模型绑定）
+- 以及上表中全部核心/可选组件仓库与 [awesome-dsh-plugin](https://awesome-dsh-plugin.com) 生态
 
-需要 Node.js、pnpm 和平台构建工具：
+各组件许可以其仓库声明为准；本整合包遵循宽松许可政策（出现侵权投诉按"侵删"处理）。
 
-```sh
-git submodule update --init --recursive
-pnpm install
-pnpm run build:dsh
-pnpm run build
-pnpm run stage:dsh
-export PATH="$PWD/bin:$PATH"
+## 🔗 相关
 
-ohdsh desktop
-ohdsh web
-ohdsh tui
-```
-
-打包完整版使用对应平台的 `dist:mac`、`dist:linux` 或 `dist:win`；只打包
-Web 使用 `pnpm run dist:web`；只打包 TUI 使用 `pnpm run dist:tui`。
-
-</details>
-
-<details>
-<summary><strong>更多界面</strong></summary>
-
-### 插件市场
-
-![Oh-DSH 插件市场](./assets/oh-dsh-plugin-marketplace.png)
-
-### Oh-DSH 皮肤
-
-![Oh-DSH 跨界面皮肤](./assets/oh-dsh-desktop-skins.png)
-
-</details>
-
-## 文档
-
-- [安装、操作与排错](./docs/usage.md)
-- [架构设计与插件边界](./docs/design.md)
-
-## 上游依赖
-
-| 上游仓库 | Oh-DSH 中的用途 |
-| --- | --- |
-| [DeepSeek Harness](https://github.com/deepseek-harness/deepseek-harness) | DSH runtime、会话与插件加载器 |
-| [dsh-TUI](https://github.com/ccch1mneyyy/dsh-TUI) | **Oh-DSH TUI 的直接上游插件**，提供终端渲染、交互和命令体系 |
-| [DSH-better-sidebar](https://github.com/omdsh-dev/DSH-better-sidebar) | Git Review、文件与 PTY Host 能力 |
-
-Oh-DSH 保留上游实现与署名，并在其上提供统一启动器、Profile、数据目录、
-跨端皮肤、界面适配和发行打包。详细边界见[设计文档](./docs/design.md)。
-
-## License
-
-[MIT](./LICENSE)
+- 选品清单：`docs/selection.md` ｜ 架构决策：`docs/adr/0001` ｜ 调研底稿：`docs/overlap-map.md`
+- 术语表：`CONTEXT.md` ｜ 补丁簿：`docs/patch-book.md` ｜ 调研档案：`research/`、`research_output/`
