@@ -1,0 +1,25 @@
+﻿# Only the vision API is configured here. DeepSeek auth is still sent by Codex and passed through by the proxy.
+VISION_API_KEY=
+# Use an endpoint that supports OpenAI Chat Completions, OpenAI Responses, or
+# Anthropic Messages; select the protocol below.
+# Recommended options (see README):
+#   OpenRouter:        https://openrouter.ai/api/v1
+#   Aliyun DashScope:  https://dashscope.aliyuncs.com/compatible-mode/v1
+VISION_BASE_URL=https://openrouter.ai/api/v1
+# Multimodal model name. Gemini Flash series is recommended; a capable local model also works.
+VISION_MODEL=google/gemini-3.6-flash
+# Vision model output language: zh=Chinese, en=English (defaults to Chinese when unset)
+LANG=zh
+# Python client/proxy protocol: chat_completions (default), responses, or
+# anthropic. For anthropic, use a base URL ending in /v1, not /messages.
+# VISION_API_PROTOCOL=chat_completions
+# Reasoning effort sent with the responses protocol (optional).
+# VISION_REASONING_EFFORT=medium
+# Anthropic thinking mode. omit (default) sends no thinking field and has the
+# broadest compatibility. Use disabled or adaptive only when the selected model
+# documents that mode; restore omit first if the provider returns HTTP 400.
+# VISION_ANTHROPIC_THINKING=omit
+# Optional outbound User-Agent override. The default is browser-compatible to avoid
+# gateways that block Python-urllib clients.
+# VISION_USER_AGENT=custom-vision-client/1.0
+

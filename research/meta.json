@@ -1,0 +1,188 @@
+﻿[
+    {
+        "repo":  "Ghost011118/dsh-balance-meter",
+        "stars":  13,
+        "forks":  1,
+        "pushed":  "2026-08-14T04:27:02Z",
+        "created":  "2026-08-13T18:54:17Z",
+        "archived":  false,
+        "license":  "BSD-3-Clause",
+        "language":  "JavaScript",
+        "description":  "DeepSeek account balance and session cost readout for the DeepSeek Harness Web GUI",
+        "fork":  false,
+        "open_issues":  2
+    },
+    {
+        "repo":  "v587d/dsh-opencode-go-usage",
+        "stars":  2,
+        "forks":  1,
+        "pushed":  "2026-08-14T11:50:55Z",
+        "created":  "2026-08-14T06:54:16Z",
+        "archived":  false,
+        "license":  "MIT",
+        "language":  "TypeScript",
+        "description":  "A DeepSeek Harness (dsh) bundle that shows OpenCode Go subscription usage in the Web GUI\u0027s composer dock — the same seat as the built-in conversation stats line.",
+        "fork":  false,
+        "open_issues":  0
+    },
+    {
+        "repo":  "Han-1413141/dsh-cost-meter",
+        "stars":  29,
+        "forks":  2,
+        "pushed":  "2026-08-15T11:56:28Z",
+        "created":  "2026-08-13T14:57:55Z",
+        "archived":  false,
+        "license":  "MIT",
+        "language":  "JavaScript",
+        "description":  "DeepSeek Harness 会话费用统计插件:本会话费用、当日费用、历史记录与官方价格同步",
+        "fork":  false,
+        "open_issues":  0
+    },
+    {
+        "repo":  "fishxcode/dsh-plugin-deepseek-balance",
+        "stars":  0,
+        "forks":  0,
+        "pushed":  "2026-08-14T05:08:22Z",
+        "created":  "2026-08-14T02:43:01Z",
+        "archived":  false,
+        "license":  null,
+        "language":  "TypeScript",
+        "description":  "DeepSeek Harness Web client plugin that displays real-time DeepSeek API balance.",
+        "fork":  false,
+        "open_issues":  0
+    },
+    {
+        "repo":  "Sev7een/ds-api-usage",
+        "stars":  6,
+        "forks":  0,
+        "pushed":  "2026-08-13T16:03:47Z",
+        "created":  "2026-08-13T15:24:04Z",
+        "archived":  false,
+        "license":  "MIT",
+        "language":  "JavaScript",
+        "description":  null,
+        "fork":  false,
+        "open_issues":  0
+    },
+    {
+        "repo":  "nonewind/dsh-spend",
+        "stars":  5,
+        "forks":  2,
+        "pushed":  "2026-08-15T12:47:36Z",
+        "created":  "2026-08-14T03:53:44Z",
+        "archived":  false,
+        "license":  "MIT",
+        "language":  "JavaScript",
+        "description":  "Token usage \u0026 cost monitor for DeepSeek Harness — floating widget with multi-dimensional stats, time-series charts, auto-detected billing plans (Code/Token) and estimated spend.",
+        "fork":  false,
+        "open_issues":  0
+    },
+    {
+        "repo":  "lancecheney/dsh-deepseek-balance",
+        "stars":  0,
+        "forks":  1,
+        "pushed":  "2026-08-15T12:16:53Z",
+        "created":  "2026-08-15T04:44:56Z",
+        "archived":  false,
+        "license":  "MIT",
+        "language":  "JavaScript",
+        "description":  null,
+        "fork":  false,
+        "open_issues":  0
+    },
+    {
+        "repo":  "bobcat848/dsh-calculator",
+        "stars":  4,
+        "forks":  0,
+        "pushed":  "2026-08-14T13:43:08Z",
+        "created":  "2026-08-14T06:17:24Z",
+        "archived":  false,
+        "license":  "MIT",
+        "language":  "JavaScript",
+        "description":  "Calculate the real-time cost of DeepSeek API calls made by DeepSeek Harness.",
+        "fork":  false,
+        "open_issues":  0
+    },
+    {
+        "repo":  "Townrain/dsh-precise-cache",
+        "stars":  2,
+        "forks":  0,
+        "pushed":  "2026-08-14T10:06:15Z",
+        "created":  "2026-08-14T09:04:15Z",
+        "archived":  false,
+        "license":  "MIT",
+        "language":  "JavaScript",
+        "description":  "Five-decimal cache-hit readout beside the chat stats line for the DeepSeek Harness Web GUI (dsh-plugin)",
+        "fork":  false,
+        "open_issues":  0
+    },
+    {
+        "repo":  "Meredith2328/dsh-sticky-note",
+        "stars":  7,
+        "forks":  0,
+        "pushed":  "2026-08-14T08:33:43Z",
+        "created":  "2026-08-13T19:36:46Z",
+        "archived":  false,
+        "license":  "MIT",
+        "language":  "JavaScript",
+        "description":  "左下角便签：随手记点子/感想/TODO，实时保存到归档目录，清单+悬浮归档",
+        "fork":  false,
+        "open_issues":  2
+    },
+    {
+        "repo":  "Luaphes/dsh-web-attention-badge",
+        "stars":  "ERR",
+        "pushed":  "",
+        "license":  "",
+        "description":  "API_FAIL",
+        "fork":  false
+    },
+    {
+        "repo":  "zhu1090093659/dsh-web-ui",
+        "stars":  "ERR",
+        "pushed":  "",
+        "license":  "",
+        "description":  "API_FAIL",
+        "fork":  false
+    },
+    {
+        "repo":  "Starfie1d1272/dsh-builtin-toggles",
+        "stars":  "ERR",
+        "pushed":  "",
+        "license":  "",
+        "description":  "API_FAIL",
+        "fork":  false
+    },
+    {
+        "repo":  "mishibeikejie/zat-dsh-engine",
+        "stars":  "ERR",
+        "pushed":  "",
+        "license":  "",
+        "description":  "API_FAIL",
+        "fork":  false
+    },
+    {
+        "repo":  "a903067276-rgb/dsh-hud",
+        "stars":  "ERR",
+        "pushed":  "",
+        "license":  "",
+        "description":  "API_FAIL",
+        "fork":  false
+    },
+    {
+        "repo":  "a903067276-rgb/dsh-file-mentions",
+        "stars":  "ERR",
+        "pushed":  "",
+        "license":  "",
+        "description":  "API_FAIL",
+        "fork":  false
+    },
+    {
+        "repo":  "MysaDC/dsh-plugin-description",
+        "stars":  "ERR",
+        "pushed":  "",
+        "license":  "",
+        "description":  "API_FAIL",
+        "fork":  false
+    }
+]

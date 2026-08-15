@@ -1,0 +1,23 @@
+﻿# dsh-crosstalk bundle layer: mounts the cross-session messaging service and
+# decorates the stock `list_agents` / `send_message` tools with the `peers` /
+# `all` scopes and peer addressing.
+#
+# Adding this bundle to a profile installs the `crosstalk` entry
+# automatically. To override fields, target the entry by id in your profile
+# patch — do NOT insert a second `crosstalk` row:
+#
+#   - id: crosstalk
+#     config:
+#       mode: allowlist
+#       allowlist: [some-peer-name, /Users/me/work/*]
+#
+# The registry lives under `~/.dsh/crosstalk/` (or `$DSH_HOME/crosstalk`) —
+# no daemon, just heartbeat files and per-session inbox directories.
+- insert:
+    - id: crosstalk
+      name: '@dsh-crosstalk/bundle'
+      config:
+        accept: same-user
+        mode: open
+        notifyUser: true
+

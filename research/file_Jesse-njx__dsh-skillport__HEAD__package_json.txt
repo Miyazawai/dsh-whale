@@ -1,0 +1,102 @@
+﻿{
+  "name": "@dsh-skillport/bundle",
+  "version": "0.1.0",
+  "description": "dsh-skillport — every skill you already have (Claude Code, Codex, Cursor, Gemini CLI) works in DSH: Agent Skills SKILL.md discovery across .claude/.agents/.dsh/.gemini + extraPaths, Tier-2 conversions (cursor rules, claude commands, context files), find_skill search, and a skills doctor",
+  "keywords": [
+    "dsh",
+    "dsh-plugin",
+    "deepseek-harness",
+    "skills",
+    "agent-skills",
+    "SKILL.md",
+    "claude-code",
+    "cursor",
+    "gemini-cli",
+    "codex"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Jesse-njx/dsh-skillport.git"
+  },
+  "homepage": "https://github.com/Jesse-njx/dsh-skillport#readme",
+  "bugs": {
+    "url": "https://github.com/Jesse-njx/dsh-skillport/issues"
+  },
+  "type": "module",
+  "main": "./lib/index.js",
+  "types": "./lib/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./discover": {
+      "types": "./lib/discover.d.ts",
+      "default": "./lib/discover.js"
+    },
+    "./spec": {
+      "types": "./lib/spec.d.ts",
+      "default": "./lib/spec.js"
+    },
+    "./doctor": {
+      "types": "./lib/doctor.d.ts",
+      "default": "./lib/doctor.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "skills-doctor": "./lib/bin/skills-doctor.js"
+  },
+  "files": [
+    "lib",
+    "cordis.patch.yml",
+    "README.md",
+    "README.zh.md",
+    "LICENSE",
+    "docs/spec-revision.md"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "node --test \"test/*.test.ts\"",
+    "prepublishOnly": "pnpm build"
+  },
+  "dependencies": {
+    "yaml": "^2.9.0"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-commands": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-fs": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-home-paths": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-skill": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-system-prompt": "^0.1.0-rc.6",
+    "@deepseek-ai/dsh-tools": "^0.1.0-rc.6",
+    "@deepseek-ai/schemastery": "^3.18.1"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@deepseek-ai/dsh-commands": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-fs": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-fs-local": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-home-paths": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-llm": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-skill": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-skill-filesystem": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-system-prompt": "0.1.0-rc.6",
+    "@deepseek-ai/dsh-tools": "0.1.0-rc.6",
+    "@deepseek-ai/schemastery": "^3.18.1",
+    "@types/node": "^24.13.3",
+    "typescript": "^5.9.0"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  }
+}
+

@@ -1,0 +1,18 @@
+﻿# dsh-skillport bundle layer: registers the skillport provider (SKILL.md
+# discovery across .claude/.gemini/extraPaths + native-set fallback), the
+# Tier-2 converters, the find_skill tool, and the /skills doctor command.
+# Users compose this bundle into a profile and override `sources`,
+# `extraPaths`, and `convert` from their own profile patch.
+- insert:
+    - id: skillport
+      name: '@dsh-skillport/bundle'
+      config:
+        sources: [dsh, claude, agents, gemini]
+        extraPaths: []
+        convert:
+          cursorRules: true
+          contextFiles: true
+          claudeCommands: true
+        maxIndexEntries: 100
+        providerName: skillport
+

@@ -1,0 +1,92 @@
+﻿{
+  "name": "@anionex/dsh-turn-rewind",
+  "version": "0.1.0",
+  "description": "Turn-level conversation and workspace rewind for DeepSeek Harness, powered by a persistent Change Ledger",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Anionex/dsh-turn-rewind.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Anionex/dsh-turn-rewind/issues"
+  },
+  "type": "module",
+  "main": "lib/index.js",
+  "types": "lib/types/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./lib/types/index.d.ts",
+      "default": "./lib/index.js"
+    },
+    "./client": {
+      "types": "./lib/types/client/index.d.ts",
+      "default": "./lib/client.js"
+    },
+    "./core": {
+      "types": "./lib/types/engine.d.ts",
+      "default": "./lib/engine.js"
+    },
+    "./format": {
+      "types": "./lib/types/types.d.ts",
+      "default": "./lib/types.js"
+    },
+    "./rewind-host": {
+      "types": "./lib/types/rewind-host.d.ts",
+      "default": "./lib/rewind-host.js"
+    },
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "src",
+    "docs",
+    "cordis.patch.yml",
+    "README.md",
+    "README.zh.md",
+    "SECURITY.md",
+    "LICENSE"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-runtime",
+        "@deepseek-ai/dsh-client-ui-conversation"
+      ]
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json && tsc -p tsconfig.client.json && node scripts/wrap-client.mjs",
+    "check": "tsc -p tsconfig.json && pnpm run build && node --test tests/*.test.mjs && pnpm pack --dry-run",
+    "prepack": "pnpm run build",
+    "test": "pnpm run build && node --test tests/*.test.mjs"
+  },
+  "keywords": [
+    "deepseek-harness",
+    "dsh",
+    "cordis",
+    "restore-point",
+    "workspace",
+    "change-ledger",
+    "turn-rewind"
+  ],
+  "license": "BSD-3-Clause",
+  "peerDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1"
+  },
+  "devDependencies": {
+    "@deepseek-ai/cordis": "^4.0.1",
+    "@types/node": "^24.0.0",
+    "@types/react": "18.3.28",
+    "react": "18.3.1",
+    "typescript": "^5.9.2"
+  },
+  "engines": {
+    "node": "^22.19.0 || >=24.0.0"
+  },
+  "packageManager": "pnpm@11.7.0"
+}
+
