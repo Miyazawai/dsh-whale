@@ -7,8 +7,7 @@
 //   3. 输出逐插件 ✓/✗ 清单
 import assert from 'node:assert/strict'
 import { spawn } from 'node:child_process'
-import { existsSync, mkdtempSync, readFileSync, rmSync } from 'node:fs'
-import { tmpdir } from 'node:os'
+import { existsSync, readFileSync } from 'node:fs'
 import { dirname, join, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { ensureWebProfile } from '../src/profile.ts'
@@ -48,18 +47,11 @@ for (const r of results) {
   console.log(`${r.inProfile ? '✅' : '❌'} core ${r.id} (bundle ${r.bundleName}) ${r.inProfile ? 'in profile' : 'MISSING from profile bundles'}`)
 }
 
-// 启动探测：临时 DSH_HOME 指向同一 profiles 目录（复用已装组合）
-const smokeRoot = mkdtempSync(join(tmpdir(), 'dsh-whale-check-'))
-const probeHome = join(smokeRoot, 'home')
-mkdirSync(probeHome, { recursive: true })
-rmSync(join(probeHome, 'profiles'), { recursive: true, force: true })
-cpSync(join(dshHome, 'profiles'), join(probeHome, 'profiles'), { recursive: true })
-cpSync(join(dshHome, '.agent-presets'), join(probeHome, '.agent-presets'), { recursive: true, force: true })
-
+// 启动探测：直接 boot 开发 DSH_HOME（其 profiles/node_modules 已含全部插件）
 const lines = []
 const child = spawn(process.execPath, [cliEntry, '--profile', profile, '--port', '0'], {
-  cwd: smokeRoot,
-  env: { ...process.env, DSH_HOME: probeHome },
+  cwd: dshHome,
+  env: { ...process.env, DSH_HOME: dshHome },
   stdio: ['ignore', 'pipe', 'pipe'],
 })
 let readySettled = false
@@ -113,7 +105,6 @@ try {
     child.kill('SIGTERM')
     await new Promise(resolve => { if (child.exitCode !== null) resolve(); else child.once('exit', resolve) })
   }
-  rmSync(smokeRoot, { recursive: true, force: true, maxRetries: 5, retryDelay: 300 })
 }
 
 if (failures.length > 0) {
