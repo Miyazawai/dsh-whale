@@ -46,9 +46,11 @@
   ],
   "modelPresetLink": {
     "plugin": "@dsh-whale/model-preset-link",
+    "autoSwitch": true,
+    "toggleable": true,
+    "note": "自研插件（T6）：autoSwitch=true 时 client 监听 ctx.modelDirectories 按会话模型切预设（blank 自动选，已开跑会话提示）；toggleable=设置页/启动器提供一键开关，关掉即恢复手动选预设，插件本身也可整体移除（可插拔性总纲）",
     "families": { "flash": ["router-standard"], "pro": ["anchored-standard", "zero-anchored-standard", "whoami-standard"] },
     "pluginStack": { "flash": ["dsh-super-injector"], "pro": [] },
-    "modelPatterns": { "flash": "/flash/i", "pro": "/pro/i" },
-    "note": "自研插件（T6）：client 监听 ctx.modelDirectories 按会话模型切预设（blank 自动选，已开跑会话提示）；host 写 agent-presets 默认；注入器随模型族启停"
+    "modelPatterns": { "flash": "/flash/i", "pro": "/pro/i" }
   }
 }
