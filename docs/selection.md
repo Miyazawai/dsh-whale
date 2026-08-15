@@ -36,9 +36,10 @@ dsh-spend · dsh-visualize · dsh-drag-and-drop（跟踪 omdsh-dev 仓）· dsh-
 - 功能克隆：sticky-disclosure / message-preview / turn-navigator / milestone / turn-index / side-panel / web-panel / file-upload(HongMing) / paste-input / AKIRACOD fork
 - 独立 TUI 客户端：MashedPotato817/dsh-tui / openma-ai/deepseek-harness-tui
 
-## 🔀 融合（自研层）
+## 🔀 融合与必装预设（自研层）
 
-- **锚定式两阶段预设**：吸收 anchored-standard（rc.5 钉死不可直装）与"梁神"preset 思路，设计我们自己的预设（发行版外壳承诺的预设配置）。
+- **anchored-standard（用户指定必装，随包 vendor）**：`upstream/dsh-anchored-standard/`，三个变体（Anchored Standard / Zero-Anchored / Whoami），安装 = 拷贝进 `$DSH_HOME/.agent-presets/<id>`；**其测试基线（DSH rc.5 commit 47f9438 + Node 24 Windows）与我们的锁定基线完全一致**，零兼容风险。
+- **自研预设（T6）**：在 anchored-standard 之上继续吸收"梁神"preset 思路，产出 dsh-whale 自己的默认预设。
 - **补丁簿（构建阶段逐个打补丁）**：
   1. dsh-notify-windows 的手动 cordis.patch.yml 步骤 → 自动化
   2. theme-gallery × @oh-dsh/skins 共存验证

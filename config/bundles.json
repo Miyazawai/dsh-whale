@@ -36,5 +36,10 @@
     { "id": "dsh-annotation", "pkg": "dsh-annotation", "source": "npm" },
     { "id": "dsh-crosstalk", "pkg": "dsh-crosstalk", "source": "npm" },
     { "id": "dsh-browser", "pkg": "Lum1104/dsh-browser", "source": "github", "note": "Chrome 扩展，独立安装，非 DSH 插件" }
+  ],
+  "presets": [
+    { "id": "anchored-standard", "source": "upstream/dsh-anchored-standard/preset", "version": "vendored", "note": "用户指定必装；测试基线 rc.5 47f9438 与本项目一致" },
+    { "id": "zero-anchored-standard", "source": "upstream/dsh-anchored-standard/zero-anchored-standard", "version": "vendored" },
+    { "id": "whoami-standard", "source": "upstream/dsh-anchored-standard/whoami-standard", "version": "vendored" }
   ]
 }
