@@ -40,7 +40,7 @@
 ## Implementation Decisions
 
 - **基座与演进**（ADR-0001）：基座 = oh-dsh 发行层（三形态统一、Pinned DSH runtime、分层分发），实现为一次性源码级 fork（copy 后删删改改），**不合上游**；上游历史保留在 `upstream` remote 供溯源。
-- **版本策略**：锁定基线（当前基线 oh-dsh `@4a183a3`，对应 DSH 0.1.0-rc.6 线）；升级完全由整合包发版驱动。
+- **版本策略**：锁定基线（当前基线 oh-dsh `@4a183a3`，其 `dsh-source.json` 钉 DSH git `47f9438` / 0.1.0-rc.5）；插件侧契约多为 `@deepseek-ai/*@0.1.0-rc.6`（rc.6 仅存在于 npm，不在公开 git 仓库），契约差异走补丁簿④逐个对齐，若大面积冲突再评估升基线。升级完全由整合包发版驱动。
 - **三界面**：webui = web profile；gui = Electron 壳（oh-dsh 自带 `@oh-dsh/desktop`）；tui = dsh-TUI（已 vendored 于 `upstream/dsh-TUI` + `@oh-dsh/tui` 适配层）——三端共享 `~/.ohdsh` 数据目录，独立 Profile 隔离组合。
 - **插件集成**：核心 16 + 可选 17，全部以 bundle 层挂载（`dsh.bundle` / `cordis.patch.yml` 单行 insert），保持"零核心改动"。清单见 `docs/selection.md`。
 - **补丁簿**（5 项，构建期逐个处理）：① dsh-notify-windows 手动 patch 步骤自动化；② theme-gallery × `@oh-dsh/skins` 共存验证；③ drag-and-drop 双仓（bill9109 → omdsh-dev）确定跟踪源；④ 各插件 Node 版本与 rc.6 契约对齐；⑤ dsh-dafeiyu 透明置顶窗口与 Electron 桌面壳的冒烟验证。
