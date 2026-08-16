@@ -84,7 +84,12 @@ function installCorePlugins(home) {
       if (spec.install === 'manual') continue
       const source = spec.source === 'npm'
         ? `${spec.pkg}@${spec.version ?? 'latest'}`
-        : spec.source === 'github' ? `github:${spec.pkg}` : spec.pkg
+        : spec.source === 'github' ? `github:${spec.pkg}`
+        : spec.source === 'link'
+          ? (existsSync(join(__dirname, '..', spec.pkg))
+            ? join(__dirname, '..', spec.pkg)                                  // 开发态
+            : join(process.resourcesPath, spec.pkg))                           // 发布态
+          : spec.pkg
       try { await add(source); console.log(`[dsh-whale]   核心 ✓ ${spec.id}`) }
       catch { console.warn(`[dsh-whale]   核心 ✗ ${spec.id}`) }
     }

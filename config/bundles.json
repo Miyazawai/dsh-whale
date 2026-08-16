@@ -17,7 +17,8 @@
     { "id": "dsh-vision-toolkit", "pkg": "@anionex/dsh-vision-toolkit", "source": "npm", "version": "0.1.7", "profile": ["web"], "function": "视觉工具", "note": "配置指引 docs/guides/vision-toolkit-zhipu.md" },
     { "id": "dsh-plugin-description", "pkg": "MysaDC/dsh-plugin-description", "source": "github", "version": "1.2.1", "profile": ["web"], "function": "插件说明" },
     { "id": "dsh-dafeiyu", "pkg": "dsh-dafeiyu", "source": "npm", "version": "0.1.0-alpha.6", "profile": ["web"], "function": "桌宠", "note": "alpha；补丁簿⑤桌面壳共存" },
-    { "id": "dsh-super-injector", "pkg": "upstream/dsh-routing-suite/injector", "source": "link", "version": "0.3.3", "profile": ["web"], "function": "运行时注入（BepInEx 式）", "note": "用户指定必装；lib/ 需以 DSH_CHECKOUT 构建；设计契约基于 rc.6 语义，peer 范围宽松" }
+    { "id": "dsh-super-injector", "pkg": "upstream/dsh-routing-suite/injector", "source": "link", "version": "0.3.3", "profile": ["web"], "function": "运行时注入（BepInEx 式）", "note": "用户指定必装；lib/ 需以 DSH_CHECKOUT 构建；设计契约基于 rc.6 语义，peer 范围宽松" },
+    { "id": "model-preset-link", "pkg": "plugins/model-preset-link", "source": "link", "version": "0.1.1", "profile": ["web"], "function": "模型↔预设联动", "note": "自研插件：flash→Router Standard / pro→Anchored Standard，设置页可关" }
   ],
   "optional": [
     { "id": "dsh-spend", "pkg": "dsh-spend", "source": "npm", "function": "多维仪表盘" },
