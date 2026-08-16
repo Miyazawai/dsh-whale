@@ -37,15 +37,14 @@
 
 ## 🚀 快速开始
 
-> 安装包构建完成后更新此节。当前为开发版：
+1. 从 [Releases](https://github.com/Miyazawai/dsh-whale/releases/latest) 下载 **`dsh-whale Setup x.x.x.exe`**（Windows 安装包，约 94MB，自带 Node/DSH runtime，无需预装任何环境）
+2. 双击安装 → 桌面出现 **dsh-whale（鲸鱼包）** 快捷方式
+3. 启动后三选一：
+   - **GUI**：双击桌面图标（Electron 窗口）
+   - **Web**：安装目录下运行 `bin\ohdsh web`（或 GUI 内操作）
+   - **TUI**：在终端运行 `bin\ohdsh tui`
 
-```powershell
-# Web 界面
-.\bin\ohdsh web
-# 终端界面
-.\bin\ohdsh tui
-# GUI：从桌面快捷方式启动（或 pnpm start）
-```
+> 核心 17 组件开箱即用；可选组件在设置页一键开启；模型↔预设联动默认开启（换 flash/pro 自动切换路由/锚定预设），可在设置关闭。
 
 ## 📦 核心组件（默认启用，17 个）
 
