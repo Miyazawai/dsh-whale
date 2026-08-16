@@ -3,7 +3,7 @@
 const { app, BrowserWindow, Tray, Menu, nativeImage } = require('electron')
 const { spawn } = require('node:child_process')
 const { join, dirname } = require('node:path')
-const { existsSync, mkdirSync } = require('node:fs')
+const { existsSync, mkdirSync, writeFileSync } = require('node:fs')
 const { homedir } = require('node:os')
 
 const isDev = !app.isPackaged
@@ -60,8 +60,43 @@ function installPresets(home) {
   }
 }
 
+function installCorePlugins(home) {
+  // 首次运行：读 config/bundles.json，把核心插件装配进 web profile（可插拔，用户可随时卸）
+  const marker = join(home, '.dsh-whale-plugins-installed')
+  if (existsSync(marker)) return
+  const { readFileSync } = require('node:fs')
+  const bundlesPath = isDev
+    ? join(__dirname, '..', 'config', 'bundles.json')
+    : join(process.resourcesPath, 'bundles.json')
+  if (!existsSync(bundlesPath)) return
+  const bundles = JSON.parse(readFileSync(bundlesPath, 'utf8'))
+  const core = bundles.core ?? []
+  const add = (source) => new Promise(resolve => {
+    const child = spawn(process.execPath, ['--expose-internals', DSH_CLI, 'plugin', '--profile', 'web', 'add', source], {
+      env: { ...process.env, ELECTRON_RUN_AS_NODE: '1', DSH_HOME: home },
+      stdio: ['ignore', 'pipe', 'pipe'],
+    })
+    child.on('exit', () => resolve())
+  })
+  const install = async () => {
+    console.log(`[dsh-whale] 首次运行：装配 ${core.length} 个核心插件…`)
+    for (const spec of core) {
+      if (spec.install === 'manual') continue
+      const source = spec.source === 'npm'
+        ? `${spec.pkg}@${spec.version ?? 'latest'}`
+        : spec.source === 'github' ? `github:${spec.pkg}` : spec.pkg
+      try { await add(source); console.log(`[dsh-whale]   核心 ✓ ${spec.id}`) }
+      catch { console.warn(`[dsh-whale]   核心 ✗ ${spec.id}`) }
+    }
+    try { writeFileSync(marker, String(Date.now())) } catch { }
+    console.log('[dsh-whale] 核心插件装配完成')
+  }
+  install()
+}
+
 function spawnDsh() {
   installPresets(DSH_HOME)
+  installCorePlugins(DSH_HOME)
   console.log(`[dsh-whale] DSH_CLI=${DSH_CLI}`)
   console.log(`[dsh-whale] DSH_HOME=${DSH_HOME}`)
   dshChild = spawn(process.execPath, ['--expose-internals', DSH_CLI, '--profile', 'web', '--port', '0'], {

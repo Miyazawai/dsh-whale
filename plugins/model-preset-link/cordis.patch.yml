@@ -1,0 +1,4 @@
+# @dsh-whale/model-preset-link 组合补丁
+# host 半区：注册配置与状态服务；无额外行（host 逻辑在 lib/index.js 内）
+- row: model-preset-link
+  plugin: '@dsh-whale/model-preset-link'

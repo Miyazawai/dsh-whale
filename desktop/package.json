@@ -20,6 +20,7 @@
     "files": ["main.js", "preload.cjs"],
     "extraResources": [
       { "from": "../node_modules/@deepseek-ai/dsh", "to": "dsh-cli" },
+      { "from": "../config/bundles.json", "to": "bundles.json" },
       { "from": "../upstream/dsh-anchored-standard/preset", "to": "presets/anchored-standard" },
       { "from": "../upstream/dsh-anchored-standard/zero-anchored-standard", "to": "presets/zero-anchored-standard" },
       { "from": "../upstream/dsh-anchored-standard/whoami-standard", "to": "presets/whoami-standard" },
