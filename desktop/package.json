@@ -1,0 +1,31 @@
+{
+  "name": "@dsh-whale/desktop",
+  "productName": "dsh-whale（鲸鱼包）",
+  "version": "0.1.0",
+  "description": "dsh-whale 桌面壳：Electron 窗口加载 DSH Web，内置 dsh runtime",
+  "private": true,
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist:win": "electron-builder --win nsis"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "electron": "42.3.0",
+    "electron-builder": "^26.0.12"
+  },
+  "build": {
+    "appId": "ai.dsh-whale.desktop",
+    "productName": "dsh-whale",
+    "files": ["main.js", "preload.cjs"],
+    "extraResources": [
+      { "from": "../node_modules/@deepseek-ai/dsh", "to": "dsh-cli" },
+      { "from": "../upstream/dsh-anchored-standard/preset", "to": "presets/anchored-standard" },
+      { "from": "../upstream/dsh-anchored-standard/zero-anchored-standard", "to": "presets/zero-anchored-standard" },
+      { "from": "../upstream/dsh-anchored-standard/whoami-standard", "to": "presets/whoami-standard" },
+      { "from": "../upstream/dsh-routing-suite/preset/preset", "to": "presets/router-standard" }
+    ],
+    "win": { "target": ["nsis"], "icon": "../assets/icons/512x512.png" },
+    "nsis": { "oneClick": false, "perMachine": false, "allowToChangeInstallationDirectory": true, "runAfterFinish": true }
+  }
+}
