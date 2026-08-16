@@ -15,11 +15,14 @@ peerDependencyRules:
     dsh-working-activity>react: ^19.0.0
 
 allowBuilds:
+  '@deepseek-ai/dsh-subprocess-local': true
+  '@google/genai': true
   electron: true
   electron-winstaller: true
   esbuild: true
   koffi: false
   node-pty: true
+  protobufjs: true
 
 onlyBuiltDependencies:
   - electron
