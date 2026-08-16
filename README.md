@@ -108,8 +108,6 @@
 - **[yjh051108/dsh-routing-suite](https://github.com/yjh051108/dsh-routing-suite)** —— 思维路由预设 + 超级注入器（flash 模型绑定）
 - 以及上表中全部核心/可选组件仓库与 [awesome-dsh-plugin](https://awesome-dsh-plugin.com) 生态
 
-各组件许可以其仓库声明为准；本整合包遵循宽松许可政策（出现侵权投诉按"侵删"处理）。
-
 ## 🔗 相关
 
 - 选品清单：`docs/selection.md` ｜ 架构决策：`docs/adr/0001` ｜ 调研底稿：`docs/overlap-map.md`
