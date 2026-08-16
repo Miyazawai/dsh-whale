@@ -22,11 +22,12 @@ function arg(name, fallback) {
 }
 
 const sourceMode = process.env.DSH_SOURCE !== undefined && process.env.DSH_SOURCE !== ''
-if (!sourceMode) {
-  throw new Error('DSH_SOURCE env is required (point at a built DSH checkout)')
+const cliMode = process.env.DSH_CLI !== undefined && process.env.DSH_CLI !== ''
+if (!sourceMode && !cliMode) {
+  throw new Error('DSH_SOURCE or DSH_CLI env is required (point at a built checkout or the npm bin.js)')
 }
-const dshSource = resolve(process.env.DSH_SOURCE)
-const cliEntry = join(dshSource, 'apps', 'cli', 'lib', 'bin.js')
+const dshSource = sourceMode ? resolve(process.env.DSH_SOURCE) : ''
+const cliEntry = cliMode ? resolve(process.env.DSH_CLI) : join(dshSource, 'apps', 'cli', 'lib', 'bin.js')
 const dshHome = resolve(arg('--home', join(root, '.dev', 'dsh-home')))
 const profile = arg('--profile', 'web')
 const only = process.argv.includes('--only')
@@ -101,10 +102,9 @@ function shortPath(path) {
   return path
 }
 
-console.log(`installer: DSH_SOURCE=${dshSource}`)
-console.log(`installer: DSH_HOME=${dshHome}, profile=${profile}`)
+console.log(`installer: DSH_HOME=${dshHome}, profile=${profile} (${cliMode ? 'npm CLI mode' : 'source mode'})`)
 mkdirSync(dshHome, { recursive: true })
-ensureWebProfile(dshHome)
+if (!cliMode) ensureWebProfile(dshHome)
 ensureProfileNpmrc()
 
 // 1. 核心插件

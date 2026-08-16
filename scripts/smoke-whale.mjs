@@ -20,9 +20,10 @@ function arg(name, fallback) {
 }
 
 const sourceMode = process.env.DSH_SOURCE !== undefined && process.env.DSH_SOURCE !== ''
-if (!sourceMode) throw new Error('DSH_SOURCE env is required')
-const dshSource = resolve(process.env.DSH_SOURCE)
-const cliEntry = join(dshSource, 'apps', 'cli', 'lib', 'bin.js')
+const cliMode = process.env.DSH_CLI !== undefined && process.env.DSH_CLI !== ''
+if (!sourceMode && !cliMode) throw new Error('DSH_SOURCE or DSH_CLI env is required')
+const dshSource = sourceMode ? resolve(process.env.DSH_SOURCE) : ''
+const cliEntry = cliMode ? resolve(process.env.DSH_CLI) : join(dshSource, 'apps', 'cli', 'lib', 'bin.js')
 const dshHome = resolve(arg('--home', join(root, '.dev', 'dsh-home')))
 const profile = arg('--profile', 'web')
 
