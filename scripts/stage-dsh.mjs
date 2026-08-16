@@ -861,7 +861,7 @@ const pnpm = resolvePinnedPnpm(dshSource)
 console.log('Deploying pinned DSH runtime (copy import mode)')
 run(process.execPath, [
   pnpm.cliEntry,
-  '--reporter=silent',
+  '--reporter=append-only',
   '--config.package-import-method=copy',
   '--ignore-scripts',
   '--filter', '@deepseek-ai/dsh',
