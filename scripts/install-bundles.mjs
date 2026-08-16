@@ -46,18 +46,35 @@ function ensureProfileNpmrc() {
   }
 }
 
-/** 把 git 托管插件的 prepare 构建许可写入 profile pnpm-workspace.yaml。 */
+/** 允许构建名单（模块级维护，写盘时整文件再生，幂等且不破坏格式）。 */
+const allowBuildNames = new Set()
 function ensureAllowBuilds(pkgNames) {
-  const path = join(profileDir, 'pnpm-workspace.yaml')
-  let content = existsSync(path) ? readFileSync(path, 'utf8') : 'packages:\n  - .\n'
-  if (!content.includes('allowBuilds:')) content += 'allowBuilds:\n'
   for (const name of pkgNames) {
-    if (name !== '' && !content.includes(`    ${name}:`)) {
-      content += `    ${name}: true\n`
-      console.log(`installer: allowBuilds += ${name}`)
-    }
+    // pnpm allowBuilds 只认包名，不带版本号（scoped 名保留 @scope/）
+    const bare = name.replace(/@[^@]*$/, '')
+    if (bare !== '') allowBuildNames.add(bare)
   }
-  writeFileSync(path, content)
+  const path = join(profileDir, 'pnpm-workspace.yaml')
+  const existing = existsSync(path) ? readFileSync(path, 'utf8') : ''
+  // 保留已有的 minimumReleaseAgeExclude 条目
+  const excludes = []
+  for (const m of existing.matchAll(/^\s*-\s*(.+)$/gm)) {
+    if (m.index > (existing.indexOf('allowBuilds:') >= 0 ? existing.indexOf('allowBuilds:') : Infinity)) break
+    excludes.push(m[1])
+  }
+  const lines = [
+    'packages:',
+    '  - .',
+    '',
+    'nodeLinker: hoisted',
+    'autoInstallPeers: false',
+    ...(excludes.length > 0 ? ['minimumReleaseAgeExclude:', ...excludes.map(e => `  - ${e}`)] : []),
+    'allowBuilds:',
+    ...[...allowBuildNames].sort().map(name =>
+      name.startsWith('@') ? `  '${name}': true` : `  ${name}: true`),
+  ]
+  writeFileSync(path, lines.join('\n') + '\n')
+  console.log(`installer: allowBuilds now ${allowBuildNames.size} entries`)
 }
 
 function runCapture(args) {
@@ -68,7 +85,7 @@ function runCapture(args) {
   })
 }
 
-/** 从 pnpm 输出解析被忽略的构建脚本包名（"Ignored build scripts: a, b"）。 */
+/** 从 pnpm 输出解析被忽略构建脚本的包名（两种格式）。 */
 function ignoredBuildScripts(text) {
   const names = []
   for (const match of text.matchAll(/Ignored build scripts:\s*([^\r\n]+)/g)) {
@@ -76,6 +93,9 @@ function ignoredBuildScripts(text) {
       const name = part.trim().split(/\s+/)[0]
       if (name !== '') names.push(name)
     }
+  }
+  for (const match of text.matchAll(/git-hosted package ["']?([^"'\s]+)["']? needs? to execute build scripts/g)) {
+    if (match[1] !== '') names.push(match[1])
   }
   return [...new Set(names)]
 }
@@ -150,7 +170,39 @@ for (const spec of manifest.core) {
   }
 }
 
-// 2. 预设
+// 2. 可选插件（--layer optional 时安装；默认不装，保持"默认关"）
+let optionalInstalled = 0
+if (process.argv.includes('--layer') && arg('--layer', '') === 'optional') {
+  for (const spec of manifest.optional) {
+    if (only !== null && !only.has(spec.id)) continue
+    if (spec.pkg === undefined) continue
+    const source = pluginSpecSource(spec)
+    const manifestPath = join(profileDir, 'package.json')
+    const profileManifest = JSON.parse(readFileSync(manifestPath, 'utf8'))
+    const bundles = profileManifest.dsh?.profile?.bundles ?? []
+    const bundleName = spec.source === 'link'
+      ? JSON.parse(readFileSync(join(shortPath(resolve(root, spec.pkg))), 'package.json'), 'utf8').name
+      : (spec.source === 'npm' ? spec.pkg : spec.pkg.split('/').pop())
+    if (bundles.some(id => id === bundleName || id.endsWith(`/${bundleName}`))) {
+      console.log(`⏭️  skip optional ${spec.id} (already in profile)`)
+      continue
+    }
+    console.log(`📦 installing optional: ${spec.id} <- ${source}`)
+    let result = runCapture(['plugin', '--profile', profile, 'add', source])
+    if (result.status !== 0) {
+      const text = `${result.stdout ?? ''}\n${result.stderr ?? ''}`
+      const ignored = ignoredBuildScripts(text)
+      if (ignored.length > 0) {
+        ensureAllowBuilds(ignored)
+        result = runCapture(['plugin', '--profile', profile, 'add', source])
+      }
+    }
+    if (result.status === 0) optionalInstalled++
+    else console.error(`❌ optional install failed: ${spec.id}\n${result.stderr ?? ''}`)
+  }
+}
+
+// 3. 预设
 let presets = 0
 for (const preset of manifest.presets) {
   if (only !== null && !only.has(preset.id)) continue
