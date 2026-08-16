@@ -76,6 +76,7 @@
     "dist:tui:quick": "pnpm run build && pnpm run stage:dsh && node scripts/build-tui.mjs"
   },
   "dependencies": {
+    "@deepseek-ai/dsh": "0.1.0-rc.6",
     "electron-updater": "6.8.9",
     "semver": "7.7.4"
   },
