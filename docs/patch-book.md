@@ -33,6 +33,23 @@
 - **方案**：T4 集成后在 desktop 形态冒烟——窗口层级、托盘共存、跟随 Host 启停。
 - **验收**：桌面壳运行时桌宠正常显示与退出。
 
+## ⑥ 桌面壳发布态 DSH 内核缺失依赖 — ✅（v0.1.3，T0 用户实测发现）
+
+- **事实**：`extraResources` 之前只拷 `node_modules/@deepseek-ai/dsh` **包本体**（`lib/`+`config/`，0.4MB），不带其 60+ 依赖。发布态 `resources/dsh-cli` 是孤立目录，`lib/bin.js` 的 ESM `import '@deepseek-ai/dsh-app-boot'` 向上解析不到 node_modules → `ERR_MODULE_NOT_FOUND` → CLI 秒退 exit 1 → 窗口永不创建（main.js 只在收到 `dsh web: http://...` 后才开窗）→ 用户双击"没反应"，且 `spawnDsh` 每 2s 无限重启。
+- **连带 bug**：
+  1. `installCorePlugins` 的 `add()` 无条件 `resolve()` 不检查 exit code → 17 个 `plugin add` 全静默失败却照写 marker 假成功；
+  2. 插件安装不与 CLI 启动同步（fire-and-forget）→ 竞态；
+  3. link 源插件（`dsh-super-injector`、`dsh-theme-gallery`）peer 依赖（`@deepseek-ai/dsh-tools`、裸 `schemastery`/`cordis`）解析链 `resources/upstream/**` 上没有 node_modules；且 electron-builder 对 extraResources 里的 node_modules 按 `dependencies` 字段裁剪删空；
+  4. 发布态 GUI 无控制台，`console.log` 全部丢失 → 故障无迹可查。
+- **方案（v0.1.3 已落地并全链路验证）**：
+  1. `scripts/build-desktop-runtime.mjs`：在 `desktop/.runtime/dsh-cli` 做完整 `npm install @deepseek-ai/dsh@0.1.0-rc.6 --omit=dev`（528 包）+ 补装裸 `schemastery@^3.18.0`、`cordis`；
+  2. `desktop/after-pack.cjs`：打包后整体 `cpSync` runtime 进 `resources/dsh-cli`（绕过 electron-builder 的 node_modules 裁剪），并 `mklink /J resources\node_modules -> resources\dsh-cli\node_modules` 供 link 源插件 peer 解析（NSIS 打包后 junction 被 7z 跟随复制为真实目录，功能不受影响）；
+  3. `add()` 检查 exit code，marker 改为 JSON `{version, ok:[ids]}` 幂等记录——失败插件下次自动重试；
+  4. `spawnDsh` 改为 async：先 `await installCorePlugins` 再启 CLI；加 splash 窗口（首次运行提示下载）；CLI 连续 3 次启动失败弹错误框并退出（不再无限重启）；
+  5. CLI 子进程输出与主进程日志统一落 `$DSH_HOME/dsh-whale.log`；
+  6. `desktop/package.json` 加 `npmRebuild: false`（runtime 自带 prebuilds，避免 electron-builder 触发 node-gyp Spectre 失败）。
+- **验收（已完成）**：手动跑修复后 CLI 打印 `dsh web: http://127.0.0.1:端口`；静默安装全新目录 + 全新 DSH_HOME 首启 → 18/18 插件 ✓、`dsh web:` 行出现、renderer 进程存在、HTTP 200 + `__DSH_BOOT__`。
+
 ---
 
 ## 基线锁定备忘

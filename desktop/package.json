@@ -1,7 +1,7 @@
 {
   "name": "@dsh-whale/desktop",
   "productName": "dsh-whale（鲸鱼包）",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "dsh-whale 桌面壳：Electron 窗口加载 DSH Web，内置 dsh runtime",
   "private": true,
   "main": "main.js",
@@ -17,15 +17,14 @@
   "build": {
     "appId": "ai.dsh-whale.desktop",
     "productName": "dsh-whale",
+    "npmRebuild": false,
+    "afterPack": "./after-pack.cjs",
     "files": [
       "main.js",
-      "preload.cjs"
+      "preload.cjs",
+      "after-pack.cjs"
     ],
     "extraResources": [
-      {
-        "from": "../node_modules/@deepseek-ai/dsh",
-        "to": "dsh-cli"
-      },
       {
         "from": "../config/bundles.json",
         "to": "bundles.json"
@@ -33,6 +32,14 @@
       {
         "from": "../plugins/model-preset-link",
         "to": "plugins/model-preset-link"
+      },
+      {
+        "from": "../upstream/dsh-routing-suite/injector",
+        "to": "upstream/dsh-routing-suite/injector"
+      },
+      {
+        "from": "../upstream/dsh-plugins/theme-gallery",
+        "to": "upstream/dsh-plugins/theme-gallery"
       },
       {
         "from": "../upstream/dsh-anchored-standard/preset",
